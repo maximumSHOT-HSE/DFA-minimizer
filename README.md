@@ -17,7 +17,9 @@ Implementation of compression algorithm for deterministic finite state machine.
 
 - #### `<number of directed edges; signed 32 bit int>`
 
-- #### `<list of directed edge: <u_1, v_1>, ..., <u_m, v_m> >`
+- #### `<size of alphabet;signed 32 bit int;> // symbols in range [0, sigma - 1] `
+
+- #### `<list of directed edge: <u_1, v_1, c_1>, ..., <u_m, v_m, c_m> >`
 
 - #### `<starting state; signed 32 bit int> // value in range [1, n]`
 

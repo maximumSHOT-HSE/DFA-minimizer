@@ -7,7 +7,7 @@ main: bin/main.o src/main.cpp
 	$(CC) $(FLAGS) bin/main.o -o main
 
 bin/main.o: src/main.cpp
-	$(CC) $(FLAGS) -c src/main.cpp -o bin/main
+	$(CC) $(FLAGS) -c src/main.cpp -o bin/main.o
 
 bin:
 	mkdir -p bin
