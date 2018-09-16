@@ -50,21 +50,22 @@ public:
 class DFA {
 private:
 	int n = 0, m = 0, sigma = 0;
-	std::vector< std::vector< int > > g; // g[u][c] = v means that there is edge v --c--> u
+	std::vector< std::vector< std::vector< int > > > g; // g[u][c] = v means that there is edge v --c--> u
 	std::vector< char > is_term;
 	int start = 0, k = 0;
 
 	void dfs(
 		int v1, int v2, 
-		std::vector< std::vector< int > > &used,
-		DisjointSetUnion &dsu
+		std::vector< std::vector< int > > &used
 	) {
-		dsu.add_edge(v1, v2);
 		if(used[v1][v2]) return;
 		used[v1][v2] = 1;
 		for(int x = 0;x < sigma;x++) {
-			if(!g[v1][x] || !g[v2][x]) continue;
-			dfs(g[v1][x], g[v2][x], used, dsu);
+			for(int u1 : g[v1][x]) {
+				for(int u2 : g[v2][x]) {
+					dfs(u1, u2, used);
+				}
+			}
 		}
 	}
 
@@ -74,13 +75,16 @@ private:
 		const std::vector< int > &terms):
 		n(_n), m(_m), sigma(_sigma), start(_start), k(_k) {
 
-		g.resize(n + 1);
+		g.resize(n + 1, std::vector< std::vector< int > >(sigma));
 		is_term.resize(n + 1);
+
+		// std::cout << " Build \n";
 
 		for(std::tuple< int, int, int  > e : edges) {
 			int u, v, c;
 			std::tie(u, v, c) = e;
-			g[v][c] = u;
+			g[v][c].push_back(u);
+			// std::cout << "<" << u << ", " << v << ", " << c << " >\n";
 		}
 
 		for(int v : terms) {
@@ -96,11 +100,11 @@ public:
 
 		is >> n >> m >> sigma;
 
-		g.resize(n + 1, std::vector< int >(sigma));
+		g.resize(n + 1, std::vector< std::vector< int > >(sigma));
 
 		for(int u, v, c, i = 0;i < m;i++) {
 			is >> u >> v >> c;
-			g[v][c] = u;
+			g[v][c].push_back(u);
 		}
 
 		is >> start >> k;
@@ -117,13 +121,16 @@ public:
 		os << n << " " << m << " " << sigma << "\n";
 		for(int v = 1;v <= n;v++) { 
 			for(int c = 0;c < sigma;c++) {
-				if(!g[v][c]) continue;
-				os << g[v][c] << " " << v << " " << c << "\n";
+				for(int u : g[v][c]) {
+					os << u << " " << v << " " << c << "\n";
+				}
 			}
 		}
 		os << start << " " << k << "\n";
 		for(int v = 1;v <= n;v++) {
-			os << v << " ";
+			if(is_term[v]) {
+				os << v << " ";
+			}
 		}
 		os << "\n";
 	}
@@ -134,8 +141,17 @@ public:
 		
 		for(int v1 = 1;v1 <= n;v1++) {
 			for(int v2 = v1 + 1;v2 <= n;v2++) {
-				if(is_term[v1] ^ is_term[v2]) continue;
-				dfs(v1, v2, used, dsu);
+				if(is_term[v1] ^ is_term[v2]) {
+					dfs(v1, v2, used);
+				}
+			}
+		}
+
+		for(int v1 = 1;v1 <= n;v1++) {
+			for(int v2 = v1 + 1;v2 <= n;v2++) {
+				if(!used[v1][v2]) {
+					dsu.add_edge(v1, v2);
+				}
 			}
 		}
 
@@ -152,7 +168,6 @@ public:
 		for(int v = 1;v <= n;v++) {
 			if(is_term[v]) {
 				terms.push_back(dsu.get_class(v));
-				K++;
 			}
 			if(dsu.get_class(v) != v) continue;
 			color[v] = ++N;
@@ -162,23 +177,32 @@ public:
 			if(is_term[v]) {
 				terms.push_back(color[ dsu.get_class(v) ]);
 			}
-			for(int u, c = 0;c < sigma;c++) {
-				if(!g[v][c]) continue;
-				u = g[v][c];
-				M++;
-				edges.push_back({
-					color[ dsu.get_class(u) ],
-					color[ dsu.get_class(v) ],
-					c
-				});
+			for(int c = 0;c < sigma;c++) {
+				for(int u : g[v][c]) {
+					edges.push_back({
+						color[ dsu.get_class(u) ],
+						color[ dsu.get_class(v) ],
+						c
+					});
+				}
 			}
 		}
 
 		std::sort(std::begin(edges), std::end(edges));
-		edges.erase(std::unique(std::begin(edges), std::end(edges)));
+		edges.erase(std::unique(std::begin(edges), std::end(edges)), std::end(edges));
 
 		std::sort(std::begin(terms), std::end(terms));
-		terms.erase(std::unique(std::begin(terms), std::end(terms)));
+		terms.erase(std::unique(std::begin(terms), std::end(terms)), std::end(terms));
+
+		M = int(edges.size());
+		K = int(terms.size());
+
+		// std::cout << "M = " << M << ", K = " << K << "\n";
+		// for(auto it : edges) {
+		// 	int u, v, c;
+		// 	std::tie(u, v, c) = it;
+		// 	std::cout << "(" << u << ", " << v << ", " << c << ")\n";
+		// }
 
 /*
 		int _n, int _m, int _sigma, int _start, int _k, 
@@ -195,7 +219,7 @@ int main() {
 	DFA dfa;	
 
 	dfa.read(std::cin);
-	dfa.write(std::cout);
+	dfa.compress().write(std::cout);
 
 	return 0;
 }
