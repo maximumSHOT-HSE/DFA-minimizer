@@ -13,12 +13,12 @@ Implementation of compression algorithm for deterministic finite state machine.
 
 ## DFA format
 
-`<number of states;signed 32 bit int;> (enumeration from 1)
+`<number of states;signed 32 bit int;> // enumeration from 1`
 
-<number of directed edges; signed 32 bit int>
+`<number of directed edges; signed 32 bit int>`
 
-<starting state; signed 32 bit int> (value in range [1, n])
+`<starting state; signed 32 bit int> // value in range [1, n]`
 
-<number of terminal states; 32 bit int> (value >= 0)
+`<number of terminal states; 32 bit int> // value >= 0`
 
-<list of terminal states: 1 <= st_1 < st_2 < ... < st_k>`
+`<list of terminal states: 1 <= st_1 < st_2 < ... < st_k>`
