@@ -3,7 +3,7 @@ Implementation of compression algorithm for deterministic finite state machine.
 
 How to run:
 
-./DFAM.sh <command> <input_file> <output_file> (or bash DFAM.sh ...)
+./DFAM.sh <cmd> <input_file> <output_file> (or bash DFAM.sh ...)
 (NB! Incorrect arguments or incorrect io files format can lead to undefined behaviour)
 
 What commands are there?
