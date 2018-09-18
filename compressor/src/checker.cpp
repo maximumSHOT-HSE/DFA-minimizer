@@ -74,6 +74,27 @@ bool are_equal(const graph &g1, const graph &g2) {
 	return !used[g1.start][g2.start];
 }
 
+bool is_min(const graph &g) {
+	vec< vec< char > > used(g.n + 1, vec< char >(g.n + 1));
+	for(int v1 = 1;v1 <= g.n;v1++) {
+		for(int v2 = 1;v2 <= g.n;v2++) {
+			if(g.is_term[v1] ^ g.is_term[v2]) {
+				dfs(g, g, used, v1, v2);
+			}
+		}
+	}
+	for(int v1 = 1;v1 <= g.n;v1++) {
+		for(int v2 = 1;v2 <= g.n;v2++) {
+			if(v1 == v2) continue;
+			if(!used[v1][v2]) {
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
 int main(int argc, char* argv[]) {
     
 	// <input-file> <output-file> <answer-file>
@@ -87,11 +108,15 @@ int main(int argc, char* argv[]) {
     input_graph.read(inf);
     contestant_graph.read(ouf);
 
-    if(are_equal(input_graph, contestant_graph)) {
-    	quitf(_ok, "");
-    }else {
-    	quitf(_wa, "");
+    if(!are_equal(input_graph, contestant_graph)) {
+    	quitf(_wa, "Not equal");
     }
+
+    if(!is_min(contestant_graph)) {
+    	quitf(_wa, "Not minimal");
+    }
+
+    quitf(_ok, "");
 
     return 0;
 }
