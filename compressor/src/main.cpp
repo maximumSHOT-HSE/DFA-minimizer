@@ -58,6 +58,7 @@ private:
 		int v1, int v2, 
 		std::vector< std::vector< int > > &used
 	) {
+		// std::cout << "dfs(" << v1 << ", " << v2 << ")\n";
 		if(used[v1][v2]) return;
 		used[v1][v2] = 1;
 		for(int x = 0;x < sigma;x++) {
@@ -88,8 +89,11 @@ private:
 		}
 
 		for(int v : terms) {
+			// std::cout << "term " << v << "\n";
 			is_term[v] = true;
 		}
+
+		// std::cout << count(std::begin(is_term), std::end(is_term), 1) << " = " << k << "\n";
 	}
 
 public:
@@ -126,7 +130,7 @@ public:
 				}
 			}
 		}
-		os << start << " " << k << "\n";
+		os << start << "\n" << k << "\n";
 		for(int v = 1;v <= n;v++) {
 			if(is_term[v]) {
 				os << v << " ";
@@ -140,20 +144,32 @@ public:
 		DisjointSetUnion dsu(n);
 		
 		for(int v1 = 1;v1 <= n;v1++) {
-			for(int v2 = v1 + 1;v2 <= n;v2++) {
+			for(int v2 = 1;v2 <= n;v2++) {
 				if(is_term[v1] ^ is_term[v2]) {
 					dfs(v1, v2, used);
 				}
 			}
 		}
 
+		// for(int i = 1;i <= n;i++) {
+		// 	for(int j = 1;j <= n;j++) {
+		// 		std::cout << used[i][j] << " ";
+		// 	}
+		// 	std::cout << "\n";
+		// }
+
 		for(int v1 = 1;v1 <= n;v1++) {
 			for(int v2 = v1 + 1;v2 <= n;v2++) {
 				if(!used[v1][v2]) {
+					// std::cout << "edge " << v1 << " " << v2 << "\n";
 					dsu.add_edge(v1, v2);
 				}
 			}
 		}
+
+		// for(int v = 1;v <= n;v++) {
+		// 	std::cout << v << " : " << dsu.get_class(v) << " ??? \n";
+		// }
 
 		int N, M, SIGMA, START, K;
 		std::vector< std::tuple< int, int, int > > edges;
@@ -161,17 +177,15 @@ public:
 
 		N = M = K = 0;
 		SIGMA = sigma;
-		START = dsu.get_class(start);
 
 		std::vector< int > color(n + 1);
 
 		for(int v = 1;v <= n;v++) {
-			if(is_term[v]) {
-				terms.push_back(dsu.get_class(v));
-			}
 			if(dsu.get_class(v) != v) continue;
 			color[v] = ++N;
 		}
+
+		START = color[ dsu.get_class(start) ];
 
 		for(int v = 1;v <= n;v++) {
 			if(is_term[v]) {
