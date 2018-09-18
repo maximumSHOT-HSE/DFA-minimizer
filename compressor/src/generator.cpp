@@ -11,11 +11,11 @@ int main(int argc, char* argv[]) {
 
     registerGen(argc, argv, 1);
 
-    const int MINN = 1;
-    const int MAXN = 10;
-    const int MINM = 1;
+    const int MINN = 50;
+    const int MAXN = 100;
+    const int MINM = 10;
     const int MAXM = MAXN * MAXN;
-    const int SIGMA = 10;
+    const int SIGMA = 20;
 
     int n = rnd.next(MINN, MAXN);
     int ad = rnd.next(0, n - 1);
@@ -42,14 +42,20 @@ int main(int argc, char* argv[]) {
     }
 
     int start = rnd.next(1, n);
-    int k = rnd.next(0, n);
+    int k = rnd.next(0, n + ad);
 
     cout << start << endl;
     cout << k << endl;
 
-    for(int x, i = 0;i < k;i++) {
-        x = rnd.next(1, n);
-    	cout << x << " ";
+    vec< int > perm;
+    for(int i = 1;i <= n + ad;i++) {
+    	perm.push_back(i);
+    }
+
+    shuffle(std::begin(perm), std::end(perm));
+
+    for(int i = 0;i < k;i++){ 
+    	cout << perm[i] << " ";
     }
 
     cout << endl;
