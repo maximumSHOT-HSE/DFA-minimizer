@@ -28,3 +28,5 @@ Implementation of compression algorithm for deterministic finite state machine.
 - #### `<list of terminal states: 1 <= st_1 < st_2 < ... < st_k>`
 
 (See compressor/tests/sample.* for better understanding)
+
+

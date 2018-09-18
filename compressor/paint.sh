@@ -18,6 +18,10 @@ do
 	echo -ne "\t$x [peripheries=3];\n" >> "$buf"
 done
 
+start_state=$(cat "$inf" | tail -3 | head -1)
+
+echo -ne "\t$start_state [color=green];\n" >> "$buf"
+
 # [2 ... sz - 3]
 sz=$(cat "$inf" | wc -l)
 edges=$(cat "$inf" | head -n $(("$sz" - "3")) | tail -n $(("$sz" - "4")))
