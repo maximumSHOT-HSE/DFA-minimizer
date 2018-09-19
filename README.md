@@ -4,11 +4,12 @@ Implementation of compression algorithm for deterministic finite state machine.
 ## How to run:
 
 `./DFAM.sh <command> <input_file> <output_file>` (or `bash DFAM.sh` ...)
+
 (**NB!** Incorrect arguments or incorrect io files format can lead to undefined behaviour)
 
 (**NB! x2** You should execute DFAM.sh from root dir of project)
 
-(**NB! x3** All file pathes are relative)
+(**NB! x3** All file paths are relative)
 
 ## What commands are there?
 
@@ -21,8 +22,9 @@ example: `./DFAM compress sample.in sample.out`
 
 examples: 
 
-`./DFAM paint sample.in sample.pdf` (you will get .pdf file)
-`./DFAM paint sample.in sample.png` (you will get .png file)
+- `./DFAM paint sample.in sample.pdf` (you will get `.pdf` file)
+
+- `./DFAM paint sample.in sample.png` (you will get `.png` file)
 
 ## DFA format
 
