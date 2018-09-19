@@ -11,7 +11,14 @@ Implementation of compression algorithm for deterministic finite state machine.
 * *compress*: take DFA from input file, compress it and place into the output file
 (you can find format description of DFA below)
 
+example: `./DFAM compress sample.in sample.out`
+
 * *paint*: take DFA from input file, place picture into the output file
+
+examples: 
+
+`./DFAM paint sample.in sample.pdf` (you will get .pdf file)
+`./DFAM paint sample.in sample.png` (you will get .png file)
 
 ## DFA format
 
@@ -33,4 +40,5 @@ Implementation of compression algorithm for deterministic finite state machine.
 
 ## What additional packages do you need?
 
-
+* utility `dot`
+* compiler `g++` with `-std=c++17`
