@@ -44,7 +44,7 @@ examples:
 
 (See `compressor/tests/sample.*` for better understanding)
 
-**NB** In our situation num of edges = (num of states) * (size of alphabet)
+**NB!** In our situation num of edges = (num of states) * (size of alphabet)
 
 ## What additional packages do you need?
 
