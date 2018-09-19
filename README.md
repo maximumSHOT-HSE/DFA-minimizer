@@ -6,6 +6,10 @@ Implementation of compression algorithm for deterministic finite state machine.
 `./DFAM.sh <command> <input_file> <output_file>` (or `bash DFAM.sh` ...)
 (**NB!** Incorrect arguments or incorrect io files format can lead to undefined behaviour)
 
+(**NB! x2** You should execute DFAM.sh from root dir of project)
+
+(**NB! x3** All file pathes are relative)
+
 ## What commands are there?
 
 * *compress*: take DFA from input file, compress it and place into the output file

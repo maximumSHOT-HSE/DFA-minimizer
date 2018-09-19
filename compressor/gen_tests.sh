@@ -2,8 +2,7 @@
 
 cur=1
 
-make clean
-make
+make test
 
 while (( "$cur" <= "15" ))
 do

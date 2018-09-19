@@ -1,7 +1,9 @@
 CC = g++
 FLAGS = -Wall -Wextra -std=c++17 -Wshadow -pedantic -I include
 
-all: bin main generator validator checker
+all: bin main
+
+test: bin main generator validator checker
 
 main: bin/main.o src/main.cpp
 	$(CC) $(FLAGS) bin/main.o -o main
