@@ -8,8 +8,10 @@ Implementation of compression algorithm for deterministic finite state machine.
 
 ## What commands are there?
 
-* compress: take DFA from input file, compress it and place in the output file
+* *compress*: take DFA from input file, compress it and place into the output file
 (you can find format description of DFA below)
+
+* *paint*: take DFA from input file, place picture into the output file
 
 ## DFA format
 
@@ -28,5 +30,7 @@ Implementation of compression algorithm for deterministic finite state machine.
 - #### `<list of terminal states: 1 <= st_1 < st_2 < ... < st_k>`
 
 (See compressor/tests/sample.* for better understanding)
+
+## What additional packages do you need?
 
 
