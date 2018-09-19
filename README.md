@@ -42,7 +42,7 @@ examples:
 
 - #### `<list of terminal states: 1 <= st_1 < st_2 < ... < st_k>`
 
-(See compressor/tests/sample.* for better understanding)
+(See `compressor/tests/sample.*` for better understanding)
 
 ## What additional packages do you need?
 
